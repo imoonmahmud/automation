@@ -1,4 +1,5 @@
 from flask import Flask, request
+from db import save_order
 
 app = Flask(__name__)
 
@@ -9,8 +10,8 @@ def webhook():
         return {"error:": "no JSON received"}, 400
     if 'event' not in data:
         return {"error": "missing event"}, 400
-    print("Received:", data)
-    return {"status": 'received'}, 200
+    result = save_order(data["order_id"], data["event"])
+    return {"status": result}, 200
 
 @app.route("/health", methods=['GET'])
 def health():

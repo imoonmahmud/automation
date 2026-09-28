@@ -3,7 +3,7 @@ import requests
 try:
     r = requests.post(
         "http://127.0.0.1:5000/webhook", 
-        json={"event": "order_created", "id": 101})
+        json={"event": "order_created", "order_id": 101})
     if r.status_code == 200:
         print("OK:", r.json())
     else:
