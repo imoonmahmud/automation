@@ -1,8 +1,10 @@
 import hmac
 import hashlib
 import json
+import os
+from dotenv import load_dotenv
 
-SECRET = 'imoonmahmud'
+SECRET = os.getenv('WEBHOOK_SECRET')
 
 def sign_payload(payload_dict):
     payload_bytes = json.dumps(payload_dict).encode()
