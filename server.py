@@ -38,6 +38,7 @@ def webhook():
                 budget
             )
             return {'status': result}, 200
+        return {'error': 'missing singature'}
     else:
         return {"error": "missing keys"}, 400
 

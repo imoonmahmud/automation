@@ -4,6 +4,7 @@ import json
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 SECRET = os.getenv('WEBHOOK_SECRET')
 if not SECRET:
     raise SystemExit("Missing WEBHOOK_SECRET")
