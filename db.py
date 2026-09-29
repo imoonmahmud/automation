@@ -4,24 +4,30 @@ conn = sqlite3.connect('database.db')
 def init_db():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS orders (
-            order_id TEXT PRIMARY KEY,
+            lead_id TEXT PRIMARY KEY,
+            message TEXT,
+            category TEXT,
             customer_name TEXT,
-            amount TEXT
+            product TEXT,
+            budget INTEGER
         )
     """)
     conn.commit()
 
-def add_order(id, name, amount):
+def add_order(id, message, category, name, product, budget):
     conn = sqlite3.connect('database.db')
     try:
         conn.execute("""
             INSERT INTO orders (
-                order_id,
+                lead_id,
+                message,
+                category,
                 customer_name,
-                amount
+                product,
+                budget
             )
-            VALUES (?, ?, ?)
-        """,(id, name, amount))
+            VALUES (?, ?, ?, ?, ?, ?)
+        """,(id, message, category, name, product, budget))
         conn.commit()
         return 'saved'
     except sqlite3.IntegrityError:
@@ -29,4 +35,5 @@ def add_order(id, name, amount):
     finally:
         conn.close()
 
-init_db()
+for row in conn.execute("SELECT * FROM orders"):
+    print(row)
