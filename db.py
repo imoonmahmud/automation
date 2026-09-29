@@ -34,6 +34,3 @@ def add_order(id, message, category, name, product, budget):
         return 'duplicate, skipped'
     finally:
         conn.close()
-
-for row in conn.execute("SELECT * FROM orders"):
-    print(row)

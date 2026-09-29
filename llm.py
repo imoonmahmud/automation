@@ -18,10 +18,16 @@ payload = {
 
 
 def ask_llm(prompt):
-    response = requests.post(url, headers=headers, json={
-        "model": "openai/gpt-oss-120b",
-        "messages": [{"role": "user", "content": prompt}]
-    })
+    try:
+        response = requests.post(url, headers=headers, json={
+            "model": "openai/gpt-oss-120b",
+            "messages": [{"role": "user", "content": prompt}]
+        }, timeout=10)
+    except requests.exceptions.Timeout:
+        return None
+    except requests.exceptions.ConnectionError:
+        return None
+    
     if response.status_code != 200:
         return None
     return response.json()['choices'][0]['message']['content']

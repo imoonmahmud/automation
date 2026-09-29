@@ -1,9 +1,15 @@
 import requests
-
+import json
+from sign import sign_payload
 
 def send_request(payload):
+    body, sig = sign_payload(payload)
     try:
-        response = requests.post("http://127.0.0.1:5000/webhook", json=payload)
+        response = requests.post(
+            "http://127.0.0.1:5000/webhook", 
+            data=body,
+            headers={"Content-Type": "application/json", "X-Signature": sig}
+        )
         if response.status_code == 200:
             print('OK:', response.json())
         else:
@@ -12,4 +18,4 @@ def send_request(payload):
     except requests.exceptions.ConnectionError:
         print("Server is not reachable")
 
-send_request({"lead_id": "L002", "message": "I am looking for an iPhone 15. My name is Karim and I can spend around $700."})
+send_request({"lead_id": "L012", "message": "Do you deliver to Dhaka?"})
