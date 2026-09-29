@@ -38,7 +38,7 @@ def webhook():
                 budget
             )
             return {'status': result}, 200
-        return {'error': 'missing singature'}
+        return {'error': 'invalid signature'}, 401
     else:
         return {"error": "missing keys"}, 400
 
