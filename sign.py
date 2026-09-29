@@ -5,6 +5,8 @@ import os
 from dotenv import load_dotenv
 
 SECRET = os.getenv('WEBHOOK_SECRET')
+if not SECRET:
+    raise SystemExit("Missing WEBHOOK_SECRET")
 
 def sign_payload(payload_dict):
     payload_bytes = json.dumps(payload_dict).encode()
